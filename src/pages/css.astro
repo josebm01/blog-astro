@@ -1,0 +1,33 @@
+---
+import Layout from "@layouts/Layout.astro"
+import BlogPreview from "@components/BlogPreview.astro"
+import Title from "@components/Title.astro"
+import { convertirAFecha } from '../helpers/fuctions'
+
+// mostrar los posts de acuerdo a los alias
+let allPost = await Astro.glob("./posts/css/*.md");
+
+// ordenando los posts por la fecha
+allPost = allPost.sort((fecha1, fecha2) => convertirAFecha(fecha2.frontmatter.date) - convertirAFecha(fecha1.frontmatter.date));
+
+---
+
+<Layout title="CSS">
+	<Title 
+		title="CSS"
+		title2="Blog"
+		subtitle="Information"
+	/>
+
+	{
+		allPost.map( p => <BlogPreview post={p} />)
+	}
+</Layout>
+
+
+
+<style>
+    body {
+        background-color: rgb(211, 236, 249);
+    }
+</style>
